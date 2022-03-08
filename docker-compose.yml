@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+  app:
+    container_name: garimpei_item
+    image: garimpei/item
+    build: .
+    volumes:
+      - ".:/code/"
+    ports:
+      - "3003:8000"
+    environment:
+      - ENVIRONMENT=DEVELOPMENT
+      - DATABASE_HOST=postgres
+      - DATABASE_USER=postgres
+      - DATABASE_PASS=postgres
+      - DATABASE_DB=garimpei_item
+      - DATABASE_PORT=5432
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:latest
+    container_name: garimpei_item_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./.ignore/postgres/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=garimpei_item
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "garimpei@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "garimpei123!"
+    ports:
+      - "16545:80"
+    depends_on:
+      - postgres
