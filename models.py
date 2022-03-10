@@ -8,3 +8,4 @@ class ExampleModel(BaseModel):
 
     title = Column(String)
     maia = Column(String)
+    juliana = Column(String)
